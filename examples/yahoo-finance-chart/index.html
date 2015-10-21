@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Yahoo Finance Chart</title>
+    <meta name="description" content="A collection of components that make it easy to build interactive charts with D3.">
+
+    <script src="../../scripts.js"></script>
+
+    <link rel="icon" type="image/png" href="../../images/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="../../images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="../../images/favicon-96x96.png" sizes="96x96">
+    <link rel="stylesheet" href="../../styles.css" />
+  </head>
+  <body>
+    <div class="content">
+
+      <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+              <a href="../../"><img class="navbar-logo" alt="d3fc" src="../../images/logo.svg" /></a>
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="../..#quick-start">Quick Start</a></li>
+                <li class=""><a href="../../components/introduction/1-getting-started.html">Documentation</a></li>
+                <li class="active"><a href="../../examples">Examples</a></li>
+                <li><a href="https://github.com/ScottLogic/d3fc">GitHub</a></li>
+              </ul>
+            </div>
+        </div>
+      </nav>
+
+      
+<div class="container example">
+
+  <div class="row">
+
+    <div class="col-sm-9 col-xs-12">
+      <h1>
+        Yahoo Finance Chart
+      </h1>
+
+      <style>@import "index.css";</style>
+
+<p><div style='margin-right: 40px;position:relative'>
+  <div id="legend"></div>
+  <svg id='time-series' style='height: 300px; width: 100%;  overflow: visible'>
+    <defs>
+      <linearGradient id="area-gradient"
+                      x1="0%" y1="0%"
+                      x2="0%" y2="100%">
+         <stop offset="0%" stop-opacity="0.3" stop-color="#fff" />
+        <stop offset="100%" stop-opacity="0" stop-color="#1a9af9" />
+      </linearGradient>
+      <g id="activeDay-1-1072d" transform="translate(-9.5-9.5)">
+          <circle cx="9.5" cy="9.5" r="9.5" fill="#fff"/>
+          <path d="M19 9.5c0 5.2-4.3 9.5-9.5 9.5S0 14.7 0 9.5 4.3 0 9.5 0 19 4.3 19 9.5zm-.9 0c0-.4-.3-.7-.7-.7H16c-.4 0-.7.3-.7.7 0 .4.3.7.7.7h1.4c.3 0 .7-.3.7-.7zm-2.5-5c.3-.3.3-.7 0-1-.3-.3-.7-.3-1 0l-1 1c-.3.3-.3.7 0 1 .3.3.7.3 1 0l1-1zm-1.8 5c0-2.4-1.9-4.3-4.3-4.3S5.2 7.1 5.2 9.5s1.9 4.3 4.3 4.3 4.3-1.9 4.3-4.3zm-3.6-6.4V1.7c0-.4-.3-.7-.7-.7-.4 0-.7.3-.7.7v1.4c0 .4.3.7.7.7.4 0 .7-.3.7-.7zM5.5 5.5c.3-.3.3-.7 0-1l-1-1c-.3-.3-.7-.3-1 0s-.3.7 0 1l1 1c.2.2.7.2 1 0zM3.1 8.8H1.6c-.4 0-.7.3-.7.7 0 .4.3.7.7.7H3c.4 0 .7-.3.7-.7.1-.4-.2-.7-.6-.7zm.3 5.7c-.3.3-.3.7 0 1 .3.3.7.3 1 0l1-1c.3-.3.3-.7 0-1-.3-.3-.7-.3-1 0l-1 1zm5.4 1.4v1.4c0 .4.3.7.7.7.4 0 .7-.3.7-.7v-1.4c0-.4-.3-.7-.7-.7-.4 0-.7.3-.7.7zm4.7-2.4c-.3.3-.3.7 0 1l1 1c.3.3.7.3 1 0 .3-.3.3-.7 0-1l-1-1c-.2-.2-.7-.2-1 0z"/>
+      </g>
+      <g id="postMarket-1-1072d" transform="translate(-9.5-9.5)">
+          <circle cx="9.5" cy="9.5" r="9.5" fill="#fff"/>
+          <path d="M9.5 19c5.2 0 9.5-4.3 9.5-9.5S14.7 0 9.5 0 0 4.3 0 9.5 4.3 19 9.5 19zM7.9 1.7c.6-.2 1.3-.3 2-.3C14.4 1.4 18 5 18 9.5s-3.6 8.1-8.1 8.1c-.7 0-1.4-.1-2-.3 3.5-.9 6.1-4.1 6.1-7.8 0-3.8-2.6-6.9-6.1-7.8z" fill-rule="evenodd" clip-rule="evenodd"/>
+      </g>
+      <g id="preMarket-1-1072d" transform="translate(-9.5-9.5)">
+          <circle cx="9.5" cy="9.5" r="9.5" fill="#fff"/>
+          <path d="M19 9.5c0 5.2-4.3 9.5-9.5 9.5S0 14.7 0 9.5 4.3 0 9.5 0 19 4.3 19 9.5zM14.3 14.3l-3.1-3.7c.2-.3.4-.7.4-1.1 0-.9-.6-1.7-1.5-1.9V2.3c0-.3-.2-.5-.5-.5s-.6.3-.6.5v5.2c-.9.2-1.5 1-1.5 1.9 0 1.1.9 2 2 2 .3 0 .6-.1.9-.2l3.2 3.7c.1.1.2.2.4.2.1 0 .2 0 .3-.1.1-.2.2-.5 0-.7z"/>
+      </g>
+    </defs>
+  </svg>
+</div></p>
+<script src="tradedHours.js"></script>
+<script src="index.js"></script>
+
+<p>This example shows how d3fc components can be used to recreate the complex <a href="http://finance.yahoo.com/echarts?s=yhoo+Interactive#{&quot;showEma&quot;:true,&quot;emaColors&quot;:&quot;#cc0000&quot;,&quot;emaPeriods&quot;:&quot;50&quot;,&quot;emaWidths&quot;:&quot;1&quot;,&quot;emaGhosting&quot;:&quot;0&quot;,&quot;range&quot;:&quot;5d&quot;,&quot;allowChartStacking&quot;:true}">Yahoo Finance Chart</a></p>
+<p>This example makes use of a number of components, including the legend, crosshair, annotations and bands. It also includes a custom discontinuity provider for rendering an axis which excludes non-trading hours.</p>
+<p>For a detailed overview of how this chart was implemented, pop over to the Scott Logic blog which covers the details via a two-part blog series (<a href="http://blog.scottlogic.com/2015/07/08/yahoo-finance-chart.html">part one</a>, <a href="http://blog.scottlogic.com/2015/07/22/yahoo-finance-chart-part-two.html">part two</a>).</p>
+
+
+
+      <nav class="visible-xs-block">
+        <ul class="pager">
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+              
+            
+          
+            
+              
+            
+          
+            
+              
+            
+          
+            
+              
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                
+                  
+                    <li class="previous"><a href="../low-barrel/index.html"><span aria-hidden="true">&larr;</span> Low Barrel</a></li>
+                  
+                  
+                
+                  
+                  
+                
+                  
+                  
+                    <li class="next"><a href="../../components/index.html"> <span aria-hidden="true">&rarr;</span></a></li>
+                  
+                
+                  
+                  
+                
+              
+            
+          
+            
+          
+            
+          
+        </ul>
+      </nav>
+    </div>
+
+    <nav class="col-sm-3 hidden-xs">
+      <ul class="nav nav-stacked fixed nav-sidebar">
+        
+          <li>
+            
+              
+                <h4>Examples</h4>
+              
+            
+            <ul class="nav nav-stacked">
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                    <li class="">
+                      <a href="../basecoin/index.html">
+                        Basecoin
+                      </a>
+                    </li>
+                
+              
+                
+              
+                
+                    <li class="">
+                      <a href="../low-barrel/index.html">
+                        Low Barrel
+                      </a>
+                    </li>
+                
+              
+                
+                    <li class="active">
+                      <a href="index.html">
+                        Yahoo Finance Chart
+                      </a>
+                    </li>
+                
+              
+                
+              
+                
+              
+            </ul>
+          </li>
+        
+      </ul>
+    </nav>
+
+  </div>
+
+</div>
+
+
+    </div>
+    <footer>
+      <div class="container">
+        <p class="muted credit text-center">Project supported by <a href="http://www.scottlogic.com">Scott Logic</a>.</p>
+        <p class="muted credit text-center">Browser testing provided by <a class="browserstack" href="https://browserstack.com">BrowserStack</a>.</p>
+      </div>
+    </footer>
+
+    
+    <script src="//localhost:35729/livereload.js"></script>
+  </body>
+</html>
